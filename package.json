@@ -1,0 +1,47 @@
+{
+  "name": "langextract-ts",
+  "version": "0.1.0",
+  "description": "TypeScript reimplementation of langextract",
+  "private": true,
+  "license": "UNLICENSED",
+  "packageManager": "pnpm@10.30.0",
+  "scripts": {
+    "lint": "pnpm run lint:fast",
+    "lint:fast": "pnpm run check:architecture-imports && eslint --max-warnings=0 .",
+    "lint:arch": "pnpm run check:architecture-fixtures && cross-env LINT_PROFILE=arch eslint --max-warnings=0 .",
+    "lint:fix": "cross-env LINT_PROFILE=fast eslint . --fix",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
+    "check:architecture-imports": "node scripts/check-architecture-imports.mjs",
+    "check:architecture-fixtures": "node scripts/check-architecture-fixtures.mjs",
+    "check:package-contracts": "node scripts/check-package-contracts.mjs",
+    "typecheck": "bash scripts/typecheck.sh",
+    "check": "pnpm run check:package-contracts && pnpm run lint:fast && pnpm run typecheck",
+    "verify": "pnpm run check && pnpm run lint:arch && pnpm run format:check",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.3",
+    "@types/node": "^25.3.3",
+    "cross-env": "^10.1.0",
+    "eslint": "^9.39.3",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-boundaries": "^5.3.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-unused-imports": "^4.2.0",
+    "globals": "^17.3.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.4",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.2"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,mjs,cjs}": [
+      "eslint --fix"
+    ],
+    "*.{ts,tsx,js,jsx,mjs,cjs,json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}
