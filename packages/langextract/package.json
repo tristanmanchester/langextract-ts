@@ -1,21 +1,82 @@
 {
   "name": "@langextract-ts/langextract",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./extract": {
+      "types": "./dist/extract.d.ts",
+      "import": "./dist/extract.js"
+    },
+    "./providers": {
+      "types": "./dist/providers.d.ts",
+      "import": "./dist/providers.js"
+    },
+    "./io": {
+      "types": "./dist/io.d.ts",
+      "import": "./dist/io.js"
+    },
+    "./progress": {
+      "types": "./dist/progress.d.ts",
+      "import": "./dist/progress.js"
+    },
+    "./visualization": {
+      "types": "./dist/visualization.d.ts",
+      "import": "./dist/visualization.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js"
+    },
+    "./errors": {
+      "types": "./dist/errors.d.ts",
+      "import": "./dist/errors.js"
+    },
+    "./extraction": {
+      "types": "./dist/extraction.d.ts",
+      "import": "./dist/extraction.js"
+    },
+    "./factory": {
+      "types": "./dist/factory.d.ts",
+      "import": "./dist/factory.js"
+    },
+    "./exceptions": {
+      "types": "./dist/exceptions.d.ts",
+      "import": "./dist/exceptions.js"
     }
   },
   "files": [
     "dist"
   ],
+  "dependencies": {
+    "ai": "^6.0.105",
+    "@ai-sdk/provider": "^3.0.8",
+    "@ai-sdk/gateway": "^3.0.59",
+    "@ai-sdk/openai": "^3.0.37",
+    "@ai-sdk/google": "^3.0.34",
+    "@ai-sdk/openai-compatible": "^2.0.31",
+    "zod": "^4.1.8"
+  },
+  "devDependencies": {
+    "vitest": "^4.0.18",
+    "@vitest/coverage-v8": "^4.0.18"
+  },
   "scripts": {
     "build": "tsc --project tsconfig.json",
-    "typecheck": "tsc --noEmit --project tsconfig.json"
+    "typecheck": "tsc --noEmit --project tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage --config vitest.config.ts",
+    "test:coverage:strict": "LANGEXTRACT_STRICT_COVERAGE=1 vitest run --coverage --config vitest.config.ts",
+    "test:smoke:live": "LANGEXTRACT_LIVE_SMOKE=1 vitest run tests/live/provider-smoke.test.ts --reporter=default"
   }
 }

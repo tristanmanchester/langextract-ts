@@ -1,0 +1,87 @@
+name: Release Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: "Publish to npm (false runs provenance dry-run only)"
+        required: false
+        default: false
+        type: boolean
+      expected_version:
+        description: "Optional expected package version (e.g. 0.2.0)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: release-package
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CI: true
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.30.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate expected package version (optional)
+        if: ${{ github.event.inputs.expected_version != '' }}
+        run: >-
+          node -e "const expected=process.env.EXPECTED_VERSION;
+          const actual=require('./packages/langextract/package.json').version;
+          if(actual!==expected){console.error(`Expected package version ${expected} but found ${actual}`);process.exit(1);}
+          console.log(`Version check passed: ${actual}`);"
+        env:
+          EXPECTED_VERSION: ${{ github.event.inputs.expected_version }}
+
+      - name: Verify release governance
+        run: pnpm run check:release-governance
+
+      - name: Run release checks
+        run: pnpm run release:check
+
+      - name: Build library package
+        run: pnpm -C packages/langextract run build
+
+      - name: Create package tarball
+        run: |
+          mkdir -p .artifacts
+          pnpm -C packages/langextract pack --pack-destination ../../.artifacts
+
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-package-tarball
+          path: .artifacts/*.tgz
+          if-no-files-found: error
+
+      - name: Publish dry-run with provenance
+        if: ${{ github.event.inputs.publish != 'true' }}
+        run: pnpm -C packages/langextract publish --access public --provenance --no-git-checks --dry-run
+
+      - name: Publish package with provenance
+        if: ${{ github.event.inputs.publish == 'true' }}
+        run: pnpm -C packages/langextract publish --access public --provenance --no-git-checks

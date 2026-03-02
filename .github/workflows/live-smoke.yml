@@ -1,0 +1,54 @@
+name: Live Smoke
+
+on:
+  schedule:
+    - cron: "30 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: live-smoke-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  live-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CI: true
+      LANGEXTRACT_LIVE_SMOKE: "1"
+      LANGEXTRACT_REQUIRE_LIVE_CREDENTIALS: "1"
+      AI_GATEWAY_API_KEY: ${{ secrets.AI_GATEWAY_API_KEY }}
+      LANGEXTRACT_API_KEY: ${{ secrets.LANGEXTRACT_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.30.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify live smoke gate command presence
+        run: >-
+          node -e "const scripts=require('./package.json').scripts||{};
+          if(!scripts['test:smoke:live']){
+          console.error('Missing required root script: test:smoke:live');
+          process.exit(1);
+          }"
+
+      - name: Run live smoke
+        run: pnpm run test:smoke:live

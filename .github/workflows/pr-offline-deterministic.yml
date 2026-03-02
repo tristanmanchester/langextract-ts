@@ -1,0 +1,51 @@
+name: PR Offline Deterministic
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-offline-deterministic-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  offline-deterministic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CI: true
+      LANGEXTRACT_LIVE_SMOKE: "0"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.30.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify strict coverage gate command presence
+        run: >-
+          node -e "const scripts=require('./package.json').scripts||{};
+          if(!scripts['test:coverage:strict']){
+          console.error('Missing required root script: test:coverage:strict');
+          process.exit(1);
+          }"
+
+      - name: Run deterministic checks
+        run: |
+          pnpm run verify
+          pnpm run test
+          pnpm run test:coverage:strict

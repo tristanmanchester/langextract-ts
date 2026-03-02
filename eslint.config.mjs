@@ -42,7 +42,7 @@ const archRules = {
   "importx/no-internal-modules": [
     "error",
     {
-      forbid: ["@langextract-ts/*/src/**", "**/src/internal/**"],
+      forbid: ["@langextract-ts/*/src/**"],
     },
   ],
 };
@@ -64,9 +64,13 @@ export default defineConfig(
   globalIgnores([
     "node_modules/**",
     "dist/**",
+    "**/dist/**",
     "build/**",
+    "**/build/**",
     "out/**",
+    "**/out/**",
     "coverage/**",
+    "**/coverage/**",
     "scripts/fixtures/**",
   ]),
   js.configs.recommended,
