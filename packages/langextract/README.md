@@ -4,6 +4,17 @@
 language extraction workflows. This package defines stable entrypoints and
 contracts while implementation details stay behind internal module boundaries.
 
+## Attribution
+
+This package is an independent TypeScript port of the original Google
+`langextract` project:
+
+- [google/langextract](https://github.com/google/langextract)
+- [Google announcement post](https://developers.googleblog.com/introducing-langextract-a-gemini-powered-information-extraction-library/)
+- [langextract.com](https://langextract.com/)
+
+It is not an official Google package.
+
 ## Public API
 
 Current public API surface:
