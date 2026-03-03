@@ -82,8 +82,8 @@ jobs:
 
       - name: Publish dry-run with provenance
         if: ${{ github.event.inputs.publish != 'true' }}
-        run: pnpm -C packages/langextract publish --access public --provenance --no-git-checks --dry-run
+        run: cd packages/langextract && pnpm publish --access public --no-git-checks --dry-run
 
       - name: Publish package with provenance
         if: ${{ github.event.inputs.publish == 'true' }}
-        run: pnpm -C packages/langextract publish --access public --provenance --no-git-checks
+        run: cd packages/langextract && pnpm publish --access public --provenance --no-git-checks
