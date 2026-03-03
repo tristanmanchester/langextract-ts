@@ -50,10 +50,10 @@ jobs:
       - name: Validate expected package version (optional)
         if: ${{ github.event.inputs.expected_version != '' }}
         run: >-
-          node -e "const expected=process.env.EXPECTED_VERSION;
-          const actual=require('./packages/langextract/package.json').version;
-          if(actual!==expected){console.error(`Expected package version ${expected} but found ${actual}`);process.exit(1);}
-          console.log(`Version check passed: ${actual}`);"
+          node -e 'const expected=process.env.EXPECTED_VERSION;
+          const actual=require("./packages/langextract/package.json").version;
+          if(actual!==expected){console.error("Expected package version "+expected+" but found "+actual);process.exit(1);}
+          console.log("Version check passed: "+actual);'
         env:
           EXPECTED_VERSION: ${{ github.event.inputs.expected_version }}
 
@@ -68,15 +68,16 @@ jobs:
 
       - name: Create package tarball
         run: |
-          mkdir -p .artifacts
+          mkdir -p artifacts
           pnpm -C packages/langextract pack
-          mv packages/langextract/*.tgz .artifacts/
+          mv packages/langextract/*.tgz artifacts/
+          ls -la artifacts
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
         with:
           name: npm-package-tarball
-          path: .artifacts/*.tgz
+          path: artifacts/*.tgz
           if-no-files-found: error
 
       - name: Publish dry-run with provenance
