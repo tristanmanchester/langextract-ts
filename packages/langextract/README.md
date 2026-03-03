@@ -15,6 +15,32 @@ This package is an independent TypeScript port of the original Google
 
 It is not an official Google package.
 
+## Install
+
+```bash
+# npm
+npm i @langextract-ts/langextract
+
+# pnpm
+pnpm add @langextract-ts/langextract
+
+# yarn
+yarn add @langextract-ts/langextract
+
+# bun
+bun add @langextract-ts/langextract
+```
+
+Update to latest:
+
+```bash
+# npm
+npm i @langextract-ts/langextract@latest
+
+# pnpm
+pnpm add @langextract-ts/langextract@latest
+```
+
 ## Public API
 
 Current public API surface:

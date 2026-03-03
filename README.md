@@ -37,6 +37,34 @@ Build package:
 pnpm -C packages/langextract run build
 ```
 
+## Install the npm package
+
+For app projects consuming the library:
+
+```bash
+# npm
+npm i @langextract-ts/langextract
+
+# pnpm
+pnpm add @langextract-ts/langextract
+
+# yarn
+yarn add @langextract-ts/langextract
+
+# bun
+bun add @langextract-ts/langextract
+```
+
+Update to latest:
+
+```bash
+# npm
+npm i @langextract-ts/langextract@latest
+
+# pnpm
+pnpm add @langextract-ts/langextract@latest
+```
+
 ## Basic extraction example
 
 ```ts
