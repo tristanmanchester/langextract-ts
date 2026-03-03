@@ -50,6 +50,19 @@ Scope: Final parity completion evidence for `@langextract-ts/langextract`
 ## Release Preflight
 
 - `pnpm run release:check`: Passed on 2026-03-02 (`verify` + `test:coverage:strict` + `check:release-governance`).
+- `pnpm run release:check`: Passed on 2026-03-03 after release-workflow fixes.
+
+## Release Workflow Evidence
+
+- Dry-run workflow passed:
+  - Run: `22607933823`
+  - URL: `https://github.com/tristanmanchester/langextract-ts/actions/runs/22607933823`
+  - Result: all deterministic checks + tarball artifact + publish dry-run passed.
+- Publish workflow failed on npm auth/scope precondition:
+  - Run: `22607974797`
+  - URL: `https://github.com/tristanmanchester/langextract-ts/actions/runs/22607974797`
+  - Failure: npm token in CI reported expired/revoked and publish returned `404` for `@langextract-ts/langextract`.
+  - Status: release blocked pending refreshed npm token with publish rights for `@langextract-ts`.
 
 ## Parity Matrix Mapping Summary
 
@@ -71,6 +84,9 @@ Local manual smoke command status:
 
 - `pnpm run test:smoke:live` executed on 2026-03-02: command succeeded but live suite was skipped (`1 skipped`) because no active live route credentials were available in this local environment.
 - `pnpm run test:smoke:live` executed on 2026-03-03 with `AI_GATEWAY_API_KEY`: live smoke passed (`2 passed`) with route diagnostic:
+  - `route=gateway-default-alias`
+  - `resolved=gateway:google/gemini-3-flash-preview`
+- `pnpm run test:smoke:live` executed on 2026-03-03 (repeat): live smoke passed (`2 passed`) with route diagnostic:
   - `route=gateway-default-alias`
   - `resolved=gateway:google/gemini-3-flash-preview`
 

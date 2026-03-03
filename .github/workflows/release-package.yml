@@ -47,6 +47,20 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Verify npm authentication
+        run: npm whoami
+
+      - name: Verify npm scope visibility
+        run: |
+          if npm view @langextract-ts/langextract version >/tmp/npm-view-version 2>/tmp/npm-view-error; then
+            echo "Existing npm version: $(cat /tmp/npm-view-version)"
+          elif grep -q "404 Not Found" /tmp/npm-view-error; then
+            echo "Package not found in registry yet (expected for first publish)."
+          else
+            cat /tmp/npm-view-error
+            exit 1
+          fi
+
       - name: Validate expected package version (optional)
         if: ${{ github.event.inputs.expected_version != '' }}
         run: >-

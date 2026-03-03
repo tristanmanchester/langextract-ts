@@ -25,6 +25,17 @@ Changed:
   - `repository`
   - `homepage`
   - `bugs`
+- Hardened release workflow in `.github/workflows/release-package.yml`:
+  - fixed expected-version validation shell quoting;
+  - switched artifact path from hidden `.artifacts` to `artifacts` for reliable upload;
+  - fixed publish command execution context (`cd packages/langextract`);
+  - removed unsupported `--provenance` from dry-run publish (kept for real publish);
+  - added npm preflight checks (`npm whoami`, `npm view @langextract-ts/langextract version`) before publish steps.
+- Updated release runbook preconditions in `docs/release/runbook.md` with explicit npm auth/scope checks.
+- Updated parity evidence in `docs/migration/parity-final-report.md` with:
+  - passing dry-run workflow run reference,
+  - publish-run blocker details (expired/revoked CI npm token / missing scope rights),
+  - additional live-smoke evidence on 2026-03-03.
 
 Validation:
 

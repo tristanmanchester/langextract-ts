@@ -12,6 +12,8 @@ with deterministic gates and npm provenance.
    - `docs/migration/parity-matrix.md`
    - `docs/migration/contract-deltas.md`
 4. Ensure npm token and OIDC permissions are available in CI for publishing.
+   - `npm whoami`
+   - `npm view @langextract-ts/langextract version` (404 is acceptable for first publish)
 5. Ensure `docs/migration/parity-final-report.md` exists and is updated for this release candidate.
 
 ## Local Gate
