@@ -69,7 +69,8 @@ jobs:
       - name: Create package tarball
         run: |
           mkdir -p .artifacts
-          pnpm -C packages/langextract pack --pack-destination ../../.artifacts
+          pnpm -C packages/langextract pack
+          mv packages/langextract/*.tgz .artifacts/
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
