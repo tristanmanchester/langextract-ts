@@ -70,6 +70,9 @@ Rule: 3 consecutive green runs from `.github/workflows/live-smoke.yml`.
 Local manual smoke command status:
 
 - `pnpm run test:smoke:live` executed on 2026-03-02: command succeeded but live suite was skipped (`1 skipped`) because no active live route credentials were available in this local environment.
+- `pnpm run test:smoke:live` executed on 2026-03-03 with `AI_GATEWAY_API_KEY`: live smoke passed (`2 passed`) with route diagnostic:
+  - `route=gateway-default-alias`
+  - `resolved=gateway:google/gemini-3-flash-preview`
 
 | Run | Workflow run reference | Result  | Route diagnostics summary |
 | --- | ---------------------- | ------- | ------------------------- |

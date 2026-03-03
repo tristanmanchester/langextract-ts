@@ -1,3 +1,51 @@
+## 2026-03-03 - Public launch metadata + Apache 2.0 licensing
+
+Why:
+
+- The package was technically release-ready, but OSS and npm trust metadata was
+  incomplete for public launch.
+
+Changed:
+
+- Added Apache 2.0 license file at repo root:
+  - `LICENSE`
+- Updated workspace and package license metadata:
+  - `package.json` (`license: "Apache-2.0"`)
+  - `packages/langextract/package.json` (`license: "Apache-2.0"`)
+- Added npm-facing package metadata in
+  `packages/langextract/package.json`:
+  - `description`
+  - `keywords`
+  - `author`
+  - `repository`
+  - `homepage`
+  - `bugs`
+  - `publishConfig.access: "public"`
+- Added workspace repository metadata in `package.json`:
+  - `repository`
+  - `homepage`
+  - `bugs`
+
+Validation:
+
+- `pnpm -C /Users/tristan/Projects/langextract/langextract-ts run check`
+- `pnpm -C /Users/tristan/Projects/langextract/langextract-ts run test`
+- `pnpm -C /Users/tristan/Projects/langextract/langextract-ts run verify`
+- `pnpm -C /Users/tristan/Projects/langextract/langextract-ts run test:coverage:strict`
+- `pnpm -C /Users/tristan/Projects/langextract/langextract-ts run release:check`
+- `AI_GATEWAY_API_KEY=*** LANGEXTRACT_LIVE_SMOKE=1 LANGEXTRACT_REQUIRE_LIVE_CREDENTIALS=1 pnpm -C /Users/tristan/Projects/langextract/langextract-ts --filter @langextract-ts/langextract run test:smoke:live`
+
+Open Risks / Follow-ups:
+
+- npm publish permissions are still blocked on local auth
+  (`npm whoami` requires login).
+- GitHub Actions release workflow dispatch/publish still requires verified
+  repository + npm credentials in CI environment.
+
+Tags: release,metadata,license,packaging
+Type: feature
+Impact: medium
+
 ## 2026-03-02 - Public `extract(...)` prompt lint control (`promptLintLevel`)
 
 Why:

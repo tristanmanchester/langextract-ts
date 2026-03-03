@@ -3,7 +3,15 @@
   "version": "0.1.0",
   "description": "TypeScript reimplementation of langextract",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tristanmanchester/langextract-ts.git"
+  },
+  "homepage": "https://github.com/tristanmanchester/langextract-ts#readme",
+  "bugs": {
+    "url": "https://github.com/tristanmanchester/langextract-ts/issues"
+  },
   "packageManager": "pnpm@10.30.0",
   "scripts": {
     "lint": "pnpm run lint:fast",

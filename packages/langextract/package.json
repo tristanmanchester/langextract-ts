@@ -1,6 +1,28 @@
 {
   "name": "@langextract-ts/langextract",
   "version": "0.1.0",
+  "description": "TypeScript information extraction library built on AI SDK v6, inspired by Google langextract.",
+  "keywords": [
+    "langextract",
+    "information-extraction",
+    "llm",
+    "ai-sdk",
+    "nlp",
+    "gemini",
+    "openai",
+    "typescript"
+  ],
+  "author": "Tristan Manchester",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tristanmanchester/langextract-ts.git",
+    "directory": "packages/langextract"
+  },
+  "homepage": "https://github.com/tristanmanchester/langextract-ts/tree/main/packages/langextract#readme",
+  "bugs": {
+    "url": "https://github.com/tristanmanchester/langextract-ts/issues"
+  },
   "private": false,
   "type": "module",
   "engines": {
@@ -57,6 +79,9 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "ai": "^6.0.105",
     "@ai-sdk/provider": "^3.0.8",
